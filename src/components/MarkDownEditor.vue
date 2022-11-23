@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { mavonEditor } from 'mavon-editor'
+import editor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { ref } from 'vue'
 import { saveAs } from 'file-saver'
 import { ElMessage } from 'element-plus'
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+
 
 // 下载文件弹窗是否显示
 const dialogVisible = ref(false)
@@ -69,12 +70,12 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = async rawFile => {
 </script>
 
 <template>
-  <mavon-editor
+  <editor.mavonEditor
     v-model="markdownValue"
     @change="markdownValueChange"
     @save="dialogVisible = true"
     class="mavon-editor"
-  ></mavon-editor>
+  ></editor.mavonEditor>
   <div class="actions-btn">
     <el-button type="success" round @click="dialogVisible = true">下载文件</el-button>
     <el-upload
