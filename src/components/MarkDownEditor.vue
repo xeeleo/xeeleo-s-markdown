@@ -7,8 +7,7 @@ import { ElMessage } from 'element-plus'
 import { genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 
-
-// 下载文件弹窗是否显示
+// 保存文件弹窗是否显示
 const dialogVisible = ref(false)
 // markdown 文档的内容
 const markdownValue = ref('')
@@ -17,13 +16,7 @@ const markdownName = ref('')
 // 上传文件的实例
 const upload = ref<UploadInstance>()
 
-// 显示markdown 编辑器里面的内容
-const markdownValueChange = (value: string, render: string) => {
-  // console.log(value, render)
-  // console.log(markdownValue.value)
-}
-
-// 关闭输入文件名字的弹窗,并下载文件
+// 关闭输入文件名字的弹窗,并保存文件
 const closeDialog = () => {
   if (markdownName.value.trim().length < 1) {
     ElMessage({
@@ -72,12 +65,11 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = async rawFile => {
 <template>
   <editor.mavonEditor
     v-model="markdownValue"
-    @change="markdownValueChange"
     @save="dialogVisible = true"
     class="mavon-editor"
   ></editor.mavonEditor>
   <div class="actions-btn">
-    <el-button type="success" round @click="dialogVisible = true">下载文件</el-button>
+    <el-button type="success" round @click="dialogVisible = true">保存文件</el-button>
     <el-upload
       ref="upload"
       class="upload-demo"
@@ -91,8 +83,8 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = async rawFile => {
     </el-upload>
   </div>
 
-  <el-dialog v-model="dialogVisible" title="下载文件" width="30%">
-    <el-input v-model="markdownName" placeholder="请输入文件名 1~30 位" :clearable="true">
+  <el-dialog v-model="dialogVisible" title="保存文件" width="50%">
+    <el-input class="elinput" v-model="markdownName" placeholder="请输入文件名 1~30 位" :clearable="true">
       <template #append>.md</template>
     </el-input>
     <template #footer>
@@ -116,6 +108,37 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = async rawFile => {
 .v-note-wrapper {
   height: 650px;
 }
+@media screen and (min-height: 800px) {
+  .v-note-wrapper {
+    height: 640px;
+  }
+  .mavon-editor {
+    margin-bottom: 70px;
+  }
+  .actions-btn {
+    height: 70px !important;
+  }
+}
+@media screen and (min-height: 850px) {
+  .v-note-wrapper {
+    height: 690px;
+  }
+}
+@media screen and (min-height: 900px) {
+  .v-note-wrapper {
+    height: 740px;
+  }
+}
+@media screen and (min-height: 950px) {
+  .v-note-wrapper {
+    height: 810px;
+  }
+}
+@media screen and (min-height: 1000px) {
+  .v-note-wrapper {
+    height: 850px;
+  }
+}
 .actions-btn {
   width: 100%;
   position: fixed;
@@ -127,5 +150,13 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = async rawFile => {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.elinput {
+  width: calc(100% - 20px);
+}
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
